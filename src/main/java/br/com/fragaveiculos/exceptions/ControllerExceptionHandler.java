@@ -17,7 +17,7 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<StandardError> exception(Exception e, HttpServletRequest request){
 		
 		Integer status = HttpStatus.INTERNAL_SERVER_ERROR.value();
-		String error = "ERROR";
+		String error = "ERRO";
 		
 		StandardError standardError = new StandardError(Instant.now(), status, error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(standardError);
@@ -28,7 +28,7 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<StandardError> badRequest(BadRequestException e, HttpServletRequest request){
 		
 		Integer status = HttpStatus.BAD_REQUEST.value();
-		String error = "ERROR";
+		String error = "ERRO";
 		
 		StandardError standardError = new StandardError(Instant.now(), status, error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
@@ -39,7 +39,7 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
 		
 		Integer status = HttpStatus.NOT_FOUND.value();
-		String error = "ERROR";
+		String error = "ERRO";
 		
 		StandardError standardError = new StandardError(Instant.now(), status, error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(standardError);
@@ -50,7 +50,7 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<StandardError> unprocessable(UnprocessableEntityException e, HttpServletRequest request){
 		
 		Integer status = HttpStatus.UNPROCESSABLE_ENTITY.value();
-		String error = "ERROR";
+		String error = "ERRO";
 		
 		StandardError standardError = new StandardError(Instant.now(), status, error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(standardError);

@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class VeiculoPutDTO {
 
+	private Integer id;
 	private String nome;
 	private Integer anoModelo;
 	private Double preco;
