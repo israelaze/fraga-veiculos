@@ -32,7 +32,7 @@ public class MarcaService {
 		Marca result = marcaRepository.findByNome(dto.getNome());
 
 		if (result != null) {
-			response = "A marca: " + dto.getNome() + " já está cadastrada!";
+			response = "A marca " + dto.getNome() + " já está cadastrada!";
 			throw new BadRequestException(response);
 
 		} else {
@@ -50,6 +50,7 @@ public class MarcaService {
 		List<Marca> listaMarca = marcaRepository.findAll();
 
 		List<MarcaGetDTO> listaDto = new ArrayList<MarcaGetDTO>();
+		
 		for (Marca marca : listaMarca) {
 			MarcaGetDTO dto = new MarcaGetDTO();
 

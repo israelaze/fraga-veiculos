@@ -3,6 +3,7 @@ package br.com.fragaveiculos.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,20 +26,20 @@ public class MarcaController {
 	@Autowired
 	private MarcaService marcaService;
 
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<String> cadastrar(MarcaPostDTO dto) {
 
 		try {
 
 			String response = marcaService.cadastrar(dto);
-			return ResponseEntity.ok(response);
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
 		} catch (ServiceException e) {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
 
-	@GetMapping
+	@GetMapping("/lista")
 	public ResponseEntity<List<MarcaGetDTO>> buscarTodas() {
 
 		try {
@@ -51,7 +52,7 @@ public class MarcaController {
 		}
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/buscarId/{id}")
 	public ResponseEntity<MarcaGetDTO> buscarId(@PathVariable Integer id) {
 
 		try {
@@ -64,7 +65,7 @@ public class MarcaController {
 		}
 	}
 
-	@GetMapping("/{nome}")
+	@GetMapping("/buscarNome/{nome}")
 	public ResponseEntity<MarcaGetDTO> buscarNome(@PathVariable String nome) {
 
 		try {
@@ -77,7 +78,7 @@ public class MarcaController {
 		}
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<String> atualizar(MarcaPutDTO dto){
 		
 		try {
@@ -90,7 +91,7 @@ public class MarcaController {
 		}
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/excluir/{id}")
 	public ResponseEntity<String> excluir(@PathVariable Integer id){
 		
 		try {

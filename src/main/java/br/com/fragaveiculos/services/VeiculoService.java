@@ -55,6 +55,7 @@ public class VeiculoService {
 		List<Veiculo> listaVeiculo = veiculoRepository.findAll();
 
 		List<VeiculoGetDTO> listaDto = new ArrayList<VeiculoGetDTO>();
+		
 		for (Veiculo veiculo : listaVeiculo) {
 			VeiculoGetDTO dto = new VeiculoGetDTO();
 
@@ -101,7 +102,7 @@ public class VeiculoService {
 	
 	public VeiculoGetDTO buscarPlaca(String placa) {
 
-		Veiculo result = veiculoRepository.findByCodigo(placa);
+		Veiculo result = veiculoRepository.findByPlaca(placa);
 
 		if (result == null) {
 			response = "Veículo não encontrado!  PLACA: " + placa;

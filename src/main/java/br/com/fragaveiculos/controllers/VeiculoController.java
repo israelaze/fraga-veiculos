@@ -3,6 +3,7 @@ package br.com.fragaveiculos.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,20 +26,20 @@ public class VeiculoController {
 	@Autowired
 	private VeiculoService veiculoService;
 
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<String> cadastrar(VeiculoPostDTO dto) {
 
 		try {
 
 			String response = veiculoService.cadastrar(dto);
-			return ResponseEntity.ok(response);
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
 		} catch (ServiceException e) {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
 
-	@GetMapping
+	@GetMapping("/lista")
 	public ResponseEntity<List<VeiculoGetDTO>> buscarTodos() {
 
 		try {
@@ -51,7 +52,7 @@ public class VeiculoController {
 		}
 	}
 
-	@GetMapping("/id/{id}")
+	@GetMapping("/buscarId/{id}")
 	public ResponseEntity<VeiculoGetDTO> buscarId(@PathVariable Integer id) {
 
 		try {
@@ -64,7 +65,7 @@ public class VeiculoController {
 		}
 	}
 
-	@GetMapping("/cod/{codigo}")
+	@GetMapping("/buscarCodigo/{codigo}")
 	public ResponseEntity<VeiculoGetDTO> buscarCodigo(@PathVariable String codigo) {
 
 		try {
@@ -77,7 +78,7 @@ public class VeiculoController {
 		}
 	}
 	
-	@GetMapping("/{placa}")
+	@GetMapping("/buscarPlaca/{placa}")
 	public ResponseEntity<VeiculoGetDTO> buscarPlaca(@PathVariable String placa) {
 
 		try {
@@ -90,7 +91,7 @@ public class VeiculoController {
 		}
 	}
 	
-	@PatchMapping
+	@PatchMapping("/atualizar")
 	public ResponseEntity<String> atualizar(VeiculoPutDTO dto){
 		
 		try {
@@ -103,7 +104,7 @@ public class VeiculoController {
 		}
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/excluir/{id}")
 	public ResponseEntity<String> excluir(@PathVariable Integer id){
 		
 		try {
