@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,8 +40,9 @@ public class Endereco implements Serializable{
 	@Column(length = 100, nullable = false)
 	private String Municipio;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private  Estado estados;
+	private Estado estado;
 	
 	@Column(length = 10)
 	private String Cep;
