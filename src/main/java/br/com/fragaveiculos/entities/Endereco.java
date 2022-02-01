@@ -35,16 +35,16 @@ public class Endereco implements Serializable{
 	private String numero;
 	
 	@Column(length = 50, nullable = false)
-	private String Bairro;
+	private String bairro;
 	
 	@Column(length = 100, nullable = false)
-	private String Municipio;
+	private String municipio;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Estado estado;
 	
-	@Column(length = 10)
-	private String Cep;
+	@Column(length = 10, nullable = false)
+	private String cep;
 	
 }

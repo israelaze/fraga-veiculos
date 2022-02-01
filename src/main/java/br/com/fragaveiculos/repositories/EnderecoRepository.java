@@ -8,6 +8,6 @@ import br.com.fragaveiculos.entities.Endereco;
 @Repository
 public interface EnderecoRepository extends JpaRepository<Endereco, Integer>{
 	
-	Endereco findByRua(String rua);
+	Endereco findByCep(String cep);
 
 }
