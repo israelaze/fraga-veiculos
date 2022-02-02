@@ -33,8 +33,8 @@ public class ItemPedido implements Serializable{
 		id.setVeiculo(veiculo);
 	}
 	
-	public void setCliente(Cliente cliente) {
-		id.setCliente(cliente);
+	public void setPedido(Pedido pedido) {
+		id.setPedido(pedido);
 		
 	}
 

@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import br.com.fragaveiculos.entities.Cliente;
+import br.com.fragaveiculos.entities.Pedido;
 import br.com.fragaveiculos.entities.Veiculo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,8 @@ public class PedidoAuxiliar implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
+	@JoinColumn(name = "pedido_id")
+	private Pedido pedido;
 	
 	@ManyToOne
 	@JoinColumn(name = "veiculo_id")

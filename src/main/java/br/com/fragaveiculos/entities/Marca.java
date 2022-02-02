@@ -1,12 +1,15 @@
 package br.com.fragaveiculos.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -31,4 +34,6 @@ public class Marca implements Serializable {
 	@Column(length = 50, nullable = false)
 	private String nacionalidade;
 
+	@OneToMany(mappedBy = "marca")
+	private Set<Veiculo> veiculos = new HashSet<>();
 }
