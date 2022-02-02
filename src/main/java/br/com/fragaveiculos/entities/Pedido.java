@@ -32,6 +32,8 @@ public class Pedido implements Serializable{
 	private Instant data;
 	
 	@Column(nullable = false)
-	private Double total;	
+	private Double total;
+	
+	
 
 }
