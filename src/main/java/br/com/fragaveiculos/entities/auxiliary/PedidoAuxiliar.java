@@ -1,0 +1,21 @@
+package br.com.fragaveiculos.entities.auxiliary;
+
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+
+import br.com.fragaveiculos.entities.Cliente;
+import br.com.fragaveiculos.entities.Veiculo;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@Embeddable
+public class PedidoAuxiliar implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+	private Cliente cliente;
+	private Veiculo veiculo;
+
+}
