@@ -29,12 +29,17 @@ public class ClienteService {
 	
 	public String cadastrar(ClientePostDTO dto) {
 		
-		Cliente result = clienteRepository.findByCpf(dto.getCpf());
+		Cliente result1 = clienteRepository.findByCpf(dto.getCpf());
+		Cliente result2 = clienteRepository.findByTelefone(dto.getTelefone());
 		
-		if(result != null) {
+		if(result1 != null) {
 			response = "O cpf " + dto.getCpf() + " já está cadastrado!";
 			throw new BadRequestException(response);
 			
+		}else if(result2 != null){
+			response = "O telefone " + dto.getTelefone() + " já está cadastrado!";
+			throw new BadRequestException(response);
+
 		}else {
 			Cliente cliente = new Cliente();
 			mapper.map(dto, cliente);

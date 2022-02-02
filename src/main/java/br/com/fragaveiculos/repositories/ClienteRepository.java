@@ -9,4 +9,5 @@ import br.com.fragaveiculos.entities.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	
 	Cliente findByCpf(String cpf);
+	Cliente findByTelefone(String telefone);
 }
