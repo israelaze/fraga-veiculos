@@ -2,7 +2,8 @@ package br.com.fragaveiculos.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,16 +19,17 @@ import br.com.fragaveiculos.dtos.VeiculoPostDTO;
 import br.com.fragaveiculos.dtos.VeiculoPutDTO;
 import br.com.fragaveiculos.exceptions.ServiceException;
 import br.com.fragaveiculos.services.VeiculoService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/veiculos")
 public class VeiculoController {
 
-	@Autowired
-	private VeiculoService veiculoService;
+	private final VeiculoService veiculoService;
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<String> cadastrar(VeiculoPostDTO dto) {
+	public ResponseEntity<String> cadastrar(@Valid VeiculoPostDTO dto) {
 
 		try {
 
@@ -92,7 +94,7 @@ public class VeiculoController {
 	}
 	
 	@PatchMapping("/atualizar")
-	public ResponseEntity<String> atualizar(VeiculoPutDTO dto){
+	public ResponseEntity<String> atualizar(@Valid VeiculoPutDTO dto){
 		
 		try {
 			

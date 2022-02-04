@@ -48,13 +48,13 @@ public class Veiculo implements Serializable {
 	@Column(nullable = false)
 	private Integer qtdePortas;
 
-	@Column(length = 8, unique = true)
+	@Column(length = 8, nullable = false, unique = true)
 	private String placa;
 
 	@Column(columnDefinition = "TEXT")
 	private String descricao;
 	
 	@ManyToOne
-	@JoinColumn(name = "marca_id")
+	@JoinColumn(name = "marca_id", nullable = false)
 	private Marca marca;
 }

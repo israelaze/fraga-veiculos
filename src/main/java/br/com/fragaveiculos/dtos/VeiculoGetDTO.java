@@ -17,6 +17,8 @@ public class VeiculoGetDTO {
 	private Integer qtdePortas;
 	private String placa;
 	private String descricao;
+	
+	private MarcaGetDTO marca;
 
 	
 }

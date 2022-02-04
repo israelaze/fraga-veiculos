@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fragaveiculos.dtos.MarcaGetDTO;
@@ -15,33 +16,34 @@ import br.com.fragaveiculos.entities.Marca;
 import br.com.fragaveiculos.exceptions.BadRequestException;
 import br.com.fragaveiculos.exceptions.EntityNotFoundException;
 import br.com.fragaveiculos.repositories.MarcaRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class MarcaService {
 
-	@Autowired
-	private MarcaRepository marcaRepository;
+	private final MarcaRepository marcaRepository;
+	private final ModelMapper mapper;
 
-	@Autowired
-	private ModelMapper mapper;
-
-	String response;
+	String badResponse = "Já cadastrada! ";
+	String notFoundResponse = "Não encontrada! ";
+	String sucessResponse = "Sucesso! ";
 
 	public String cadastrar(MarcaPostDTO dto) {
 
-		Marca result = marcaRepository.findByNome(dto.getNome());
-
+	 	Marca result = marcaRepository.findByNome(dto.getNome());
 		if (result != null) {
-			response = "A marca " + dto.getNome() + " já está cadastrada!";
-			throw new BadRequestException(response);
-
-		} else {
+			throw new BadRequestException(badResponse + dto.getNome());
+		
+		}else {
+			
 			Marca marca = new Marca();
 			mapper.map(dto, marca);
+			
 			marcaRepository.save(marca);
-
-			response = "Marca cadastrada com sucesso!";
-			return response;
+		
+			return sucessResponse;
 		}
 	}
 
@@ -65,8 +67,7 @@ public class MarcaService {
 		Optional<Marca> result = marcaRepository.findById(id);
 
 		if (result.isEmpty()) {
-			response = "Marca não encontrada! ID: " + id;
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse + id);
 
 		} else {
 			Marca marca = result.get();
@@ -83,8 +84,7 @@ public class MarcaService {
 		Marca result = marcaRepository.findByNome(nome);
 
 		if (result == null) {
-			response = "Marca não encontrada! NOME: " + nome;
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse + nome);
 
 		} else {
 			MarcaGetDTO dto = new MarcaGetDTO();
@@ -100,17 +100,15 @@ public class MarcaService {
 		Optional<Marca> result = marcaRepository.findById(dto.getId());
 
 		if (result.isEmpty()) {
-			response = "Marca não encontrada!  ID: " + dto.getId();
-			throw new EntityNotFoundException(response);
-
-		} else {
+			throw new EntityNotFoundException(notFoundResponse + dto.getId());
+			
+		}else {
 			Marca marca = result.get();
-
+	
 			mapper.map(dto, marca);
 			marcaRepository.save(marca);
 
-			response = "Marca atualizada com sucesso!";
-			return response;
+			return sucessResponse;
 		}
 	}
 
@@ -119,15 +117,13 @@ public class MarcaService {
 		Optional<Marca> result = marcaRepository.findById(id);
 
 		if (result.isEmpty()) {
-			response = "Marca não encontrada! ID: " + id;
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse + id);
 
 		} else {
 			Marca marca = result.get();
 			marcaRepository.delete(marca);
 
-			String response = "Marca excluída com sucesso!";
-			return response;
+			return sucessResponse;
 		}
 	}
 

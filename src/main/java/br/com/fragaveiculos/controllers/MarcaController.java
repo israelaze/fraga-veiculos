@@ -2,7 +2,8 @@ package br.com.fragaveiculos.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,16 +19,17 @@ import br.com.fragaveiculos.dtos.MarcaPostDTO;
 import br.com.fragaveiculos.dtos.MarcaPutDTO;
 import br.com.fragaveiculos.exceptions.ServiceException;
 import br.com.fragaveiculos.services.MarcaService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/marcas")
 public class MarcaController {
 
-	@Autowired
-	private MarcaService marcaService;
+	private final MarcaService marcaService;
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<String> cadastrar(MarcaPostDTO dto) {
+	public ResponseEntity<String> cadastrar(@Valid MarcaPostDTO dto) {
 
 		try {
 
@@ -79,7 +81,7 @@ public class MarcaController {
 	}
 	
 	@PutMapping("/atualizar")
-	public ResponseEntity<String> atualizar(MarcaPutDTO dto){
+	public ResponseEntity<String> atualizar(@Valid MarcaPutDTO dto){
 		
 		try {
 			

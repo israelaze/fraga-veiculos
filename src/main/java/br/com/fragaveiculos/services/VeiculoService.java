@@ -4,49 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fragaveiculos.dtos.VeiculoGetDTO;
 import br.com.fragaveiculos.dtos.VeiculoPostDTO;
 import br.com.fragaveiculos.dtos.VeiculoPutDTO;
+import br.com.fragaveiculos.entities.Marca;
 import br.com.fragaveiculos.entities.Veiculo;
 import br.com.fragaveiculos.exceptions.BadRequestException;
 import br.com.fragaveiculos.exceptions.EntityNotFoundException;
+import br.com.fragaveiculos.repositories.MarcaRepository;
 import br.com.fragaveiculos.repositories.VeiculoRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class VeiculoService {
 
-	@Autowired
-	private VeiculoRepository veiculoRepository;
+	private final VeiculoRepository veiculoRepository;
+	private final MarcaRepository marcaRepository;
+	private final ModelMapper mapper;
 
-	@Autowired
-	private ModelMapper mapper;
-
+	String badResponse = "Já cadastrado! ";
+	String notFoundResponse = "Não encontrado! ";
+	String sucessResponse = "Sucesso! ";
 	String response;
 
 	public String cadastrar(VeiculoPostDTO dto) {
 
 		Veiculo v1 = veiculoRepository.findByCodigo(dto.getCodigo());
 		Veiculo v2 = veiculoRepository.findByPlaca(dto.getPlaca());
+		Optional<Marca> result = marcaRepository.findById(dto.getMarca());
 
-		if (v1 != null) {
-			response = "O código: " + dto.getCodigo() + " já está cadastrado!";
-			throw new BadRequestException(response);
-
-		} else if (v2 != null) {
-			response = "A placa: " + dto.getPlaca() + " já está cadastrada!";
-			throw new BadRequestException(response);
-
-		} else {
+		if (v1 != null || v2 != null) {
+			throw new BadRequestException(badResponse);
+			
+		}else if (result.isEmpty()){
+			response = "Marca não encontrada! ID: " + dto.getMarca();
+			throw new EntityNotFoundException(response);
+			
+		} else {	
+			Marca marca = result.get();
 			Veiculo veiculo = new Veiculo();
+			
+			veiculo.setMarca(marca);
 			mapper.map(dto, veiculo);
+			
 			veiculoRepository.save(veiculo);
-
-			response = "Veículo cadastrado com sucesso!";
-			return response;
+			
+			return sucessResponse;
 		}
 	}
 
@@ -70,8 +80,7 @@ public class VeiculoService {
 		Optional<Veiculo> result = veiculoRepository.findById(id);
 
 		if (result.isEmpty()) {
-			response = "Veículo não encontrado!  ID: " + id;
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse);
 
 		} else {
 			Veiculo veiculo = result.get();
@@ -88,8 +97,7 @@ public class VeiculoService {
 		Veiculo result = veiculoRepository.findByCodigo(codigo);
 
 		if (result == null) {
-			response = "Veículo não encontrado!  CÓD: " + codigo;
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse + codigo);
 
 		} else {
 			VeiculoGetDTO dto = new VeiculoGetDTO();
@@ -105,8 +113,7 @@ public class VeiculoService {
 		Veiculo result = veiculoRepository.findByPlaca(placa);
 
 		if (result == null) {
-			response = "Veículo não encontrado!  PLACA: " + placa;
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse + placa);
 
 		} else {
 			VeiculoGetDTO dto = new VeiculoGetDTO();
@@ -122,8 +129,7 @@ public class VeiculoService {
 		Optional<Veiculo> result = veiculoRepository.findById(dto.getId());
 
 		if(result.isEmpty()) {
-			response = "Veículo não encontrado!  ID: " + dto.getId();
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse + dto.getId());
 			
 		}else {
 			Veiculo veiculo = result.get();
@@ -131,8 +137,7 @@ public class VeiculoService {
 			mapper.map(dto, veiculo);
 			veiculoRepository.save(veiculo);
 
-			response = "Veículo atualizado com sucesso!";
-			return response;
+			return sucessResponse;
 		}
 	}
 
@@ -141,15 +146,13 @@ public class VeiculoService {
 		Optional<Veiculo> result = veiculoRepository.findById(id);
 
 		if(result.isEmpty()) {
-			response = "Veículo não encontrado!  ID: " + id;
-			throw new EntityNotFoundException(response);
+			throw new EntityNotFoundException(notFoundResponse + id);
 			
 		}else {
 			Veiculo veiculo = result.get();
 			veiculoRepository.delete(veiculo);
-
-			String response = "Veículo excluído com sucesso!";
-			return response;
+			
+			return sucessResponse;
 		}	
 	}
 
