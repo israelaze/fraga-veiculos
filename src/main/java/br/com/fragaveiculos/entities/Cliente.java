@@ -46,6 +46,6 @@ public class Cliente implements Serializable{
 	private Set<Pedido> pedidos = new HashSet<>();
 	
 	@ManyToOne
-	@JoinColumn(name = "endereco_id")
+	@JoinColumn(name = "endereco_id", nullable = false)
 	private Endereco endereco;
 }

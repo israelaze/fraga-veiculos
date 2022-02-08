@@ -1,6 +1,6 @@
 package br.com.fragaveiculos.dtos;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,13 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MarcaPutDTO {
-
-	@NotNull
+	
 	private Integer id;
 	
-	@NotNull(message = "Campo obrigatório!")
+	@NotBlank(message = "Campo obrigatório!")
 	private String nome;
 	
-	@NotNull(message = "Campo obrigatório!")
+	@NotBlank(message = "Campo obrigatório!")
 	private String nacionalidade;
 }

@@ -27,10 +27,10 @@ public class Veiculo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(length = 15, nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 15)
 	private String codigo;
 
-	@Column(length = 50, nullable = false)
+	@Column(nullable = false, length = 50)
 	private String nome;
 
 	@Column(nullable = false)
@@ -39,7 +39,7 @@ public class Veiculo implements Serializable {
 	@Column(nullable = false)
 	private Double preco;
 
-	@Column(length = 50, nullable = false)
+	@Column(nullable = false, length = 50)
 	private String cor;
 
 	@Column(nullable = false)
@@ -48,7 +48,7 @@ public class Veiculo implements Serializable {
 	@Column(nullable = false)
 	private Integer qtdePortas;
 
-	@Column(length = 8, nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 8)
 	private String placa;
 
 	@Column(columnDefinition = "TEXT")

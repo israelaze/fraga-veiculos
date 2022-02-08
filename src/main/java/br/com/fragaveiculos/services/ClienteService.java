@@ -4,26 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fragaveiculos.dtos.ClienteGetDTO;
 import br.com.fragaveiculos.dtos.ClientePostDTO;
 import br.com.fragaveiculos.dtos.ClientePutDTO;
 import br.com.fragaveiculos.entities.Cliente;
+import br.com.fragaveiculos.entities.Endereco;
 import br.com.fragaveiculos.exceptions.BadRequestException;
 import br.com.fragaveiculos.exceptions.EntityNotFoundException;
 import br.com.fragaveiculos.repositories.ClienteRepository;
+import br.com.fragaveiculos.repositories.EnderecoRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class ClienteService {
 	
-	@Autowired
-	private ClienteRepository clienteRepository;
-	
-	@Autowired
-	private ModelMapper mapper;
+	private final ClienteRepository clienteRepository;
+	private final EnderecoRepository enderecoRepository;
+	private final ModelMapper mapper;
 	
 	String response;
 	
@@ -41,9 +45,15 @@ public class ClienteService {
 			throw new BadRequestException(response);
 
 		}else {
+			
 			Cliente cliente = new Cliente();
+			Endereco endereco = new Endereco();
+			
+			mapper.map(dto, endereco);
 			mapper.map(dto, cliente);
+			enderecoRepository.save(endereco);
 			clienteRepository.save(cliente);
+			
 			
 			response = "Cliente cadastrado com sucesso!";
 			return response;

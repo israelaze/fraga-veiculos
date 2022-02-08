@@ -1,5 +1,6 @@
 package br.com.fragaveiculos.dtos;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -9,10 +10,10 @@ import lombok.Setter;
 @Setter
 public class VeiculoPostDTO {
 
-	@NotNull(message = "Campo obrigatório!")
+	@NotBlank(message = "Campo obrigatório!")
 	private String codigo;
 	
-	@NotNull(message = "Campo obrigatório!")
+	@NotBlank(message = "Campo obrigatório!")
 	private String nome;
 	
 	@NotNull(message = "Campo obrigatório!")
@@ -21,7 +22,7 @@ public class VeiculoPostDTO {
 	@NotNull(message = "Campo obrigatório!")
 	private Double preco;
 	
-	@NotNull(message = "Campo obrigatório!")
+	@NotBlank(message = "Campo obrigatório!")
 	private String cor;
 	
 	@NotNull(message = "Campo obrigatório!")
@@ -30,7 +31,7 @@ public class VeiculoPostDTO {
 	@NotNull(message = "Campo obrigatório!")
 	private Integer qtdePortas;
 	
-	@NotNull(message = "Campo obrigatório!")
+	@NotBlank(message = "Campo obrigatório!")
 	private String placa;
 	
 	private String descricao;

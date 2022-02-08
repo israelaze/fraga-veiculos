@@ -28,12 +28,13 @@ public class Marca implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(length = 50, nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 50)
 	private String nome;
 
-	@Column(length = 50, nullable = false)
+	@Column(nullable = false, length = 50)
 	private String nacionalidade;
-
+	
 	@OneToMany(mappedBy = "marca")
 	private Set<Veiculo> veiculos = new HashSet<>();
+		
 }

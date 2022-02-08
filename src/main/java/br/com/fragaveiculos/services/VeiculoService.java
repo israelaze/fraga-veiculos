@@ -29,7 +29,7 @@ public class VeiculoService {
 	private final MarcaRepository marcaRepository;
 	private final ModelMapper mapper;
 
-	String badResponse = "Já cadastrado! ";
+	String badResponse = "Código ou placa já cadastrados! ";
 	String notFoundResponse = "Não encontrado! ";
 	String sucessResponse = "Sucesso! ";
 	String response;
@@ -38,19 +38,21 @@ public class VeiculoService {
 
 		Veiculo v1 = veiculoRepository.findByCodigo(dto.getCodigo());
 		Veiculo v2 = veiculoRepository.findByPlaca(dto.getPlaca());
-		Optional<Marca> result = marcaRepository.findById(dto.getMarca());
-
+		
 		if (v1 != null || v2 != null) {
 			throw new BadRequestException(badResponse);
-			
-		}else if (result.isEmpty()){
+		}
+		
+		Optional<Marca> result = marcaRepository.findById(dto.getMarca());
+		
+		if (result.isEmpty()){
 			response = "Marca não encontrada! ID: " + dto.getMarca();
 			throw new EntityNotFoundException(response);
 			
 		} else {	
 			Marca marca = result.get();
 			Veiculo veiculo = new Veiculo();
-			
+		
 			veiculo.setMarca(marca);
 			mapper.map(dto, veiculo);
 			
@@ -63,7 +65,6 @@ public class VeiculoService {
 	public List<VeiculoGetDTO> buscarTodos() {
 
 		List<Veiculo> listaVeiculo = veiculoRepository.findAll();
-
 		List<VeiculoGetDTO> listaDto = new ArrayList<VeiculoGetDTO>();
 		
 		for (Veiculo veiculo : listaVeiculo) {
